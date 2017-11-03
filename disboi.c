@@ -17,8 +17,9 @@
 */
 void MotorTest(void)
 	{
-		startMotor(controlMotor, 127);
-		startMotor(testMotor, 127);
+		int speed = 127
+		startMotor(controlMotor, speed);
+		startMotor(testMotor, speed);
 		wait(10);
 		stopMotor(controlMotor);
 		startMotor(controlMotor);
