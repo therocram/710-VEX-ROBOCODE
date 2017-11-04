@@ -1,0 +1,22 @@
+This is the official 710-VEX-ROBOCODE Repository Code of Conduct
+	-Owner (therocram)
+
+1. Please be respectful to the owner and users of the repository
+
+2. Follow the wishes of the repository owner at all times
+
+3. DO NOT Delete any files or branches without explicit permission from the owner
+
+4. DO NOT post innapropriate content onto the repository (this includes spam)
+
+5. You may add any files to the repository that do not disturb the workflow of other users 
+or clutter the master branch
+
+6. Report any violation of these rules directly to the owner.
+
+Violation of one of these rules will result in a warning. A second offense may result in a temporary ban or 
+second warning. Repeated offenses may result in a permanent ban. All punishments are decided by repository 
+owner and are case based. If you feel like you were unfairly reported or that a punishment is too harsh 
+please contact the owner. 
+
+Please offer any suggestions regarding the code of conduct to the owner.
