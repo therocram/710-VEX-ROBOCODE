@@ -4,3 +4,4 @@ Prepare to Git GUd and do more that just that
 actually don't please. More stuff don't
 
 Let's try and create a merge conflict
+
