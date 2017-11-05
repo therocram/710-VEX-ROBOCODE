@@ -20,3 +20,4 @@ owner and are case based. If you feel like you were unfairly reported or that a 
 please contact the owner. 
 
 Please offer any suggestions regarding the code of conduct to the owner.
+Feel free to contact the owner fro any question regarding Git!
