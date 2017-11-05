@@ -4,9 +4,9 @@
 
 /* Controler Code
 
-	This is the code provided on Canvas for POE
+	This is the code provided on Canvas for POE 
 	
-	
+	Controlls 2 motors 
 
 
 
