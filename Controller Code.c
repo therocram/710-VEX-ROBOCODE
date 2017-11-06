@@ -4,14 +4,14 @@
 
 /* Controler Code
 
-	This is the code provided on Canvas for POE 
-	
-	Controlls 2 motors 
+	This is the code provided on Canvas for POE
+
+	Controlls 2 motors yea hey that's pretty good
 
 
 
 
-*/ 
+*/
 
 void ControllerCode(void)
 	{
