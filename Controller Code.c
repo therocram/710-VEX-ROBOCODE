@@ -6,9 +6,23 @@
 
 	This is the code provided on Canvas for POE
 
-	Controlls 2 motors yea hey that's pretty good
+	Controlls 2 motors
+------------------------------------------------------------------------------------------------------------------------
+	Instructions on connecting Controller to Cortex:
 
+		1. Connect 7.2V battery to VEX Cortex, then install batteries into VEX controller.
 
+		2. DO NOT turn on the Cortex or the controller. Connect one end of a USB A-to-A cable into
+		the Cortex. Then connect the other end into the VEX controller.
+
+		3. Turn the Cortex on. Wait 15 seconds for the Robot and VEXNet LED's on the cortex to turn green.
+		Turn the Cortex off and unplug the USB cable from the controller and the cortex.
+
+		4. Insert VEXnet USB Keys into the VEXnet Remote Control and Cortex. It doesn't matter which key
+		you put in what. Turn the Cortex on and the controller on and wait 15 seconds for the LED's on both to turn green.
+
+		5. Enjoy!
+------------------------------------------------------------------------------------------------------------------------
 
 
 */
@@ -21,6 +35,8 @@ void ControllerCode(void)
 		    motor[rightMotor] = (vexRT[Ch2] - vexRT[Ch1])/2;  // (y - x)/2
 		  }
 	}
+
+
 task main()
 {
 	ControllerCode();
