@@ -37,8 +37,8 @@ void ControllerCode(void)
 		    motor[leftMotor]  = (vexRT[Ch2] + vexRT[Ch1])/2;  // (y + x)/2
 		    motor[rightMotor] = (vexRT[Ch2] - vexRT[Ch1])/2;  // (y - x)/2
 
-		    motor[bottomLeft] = (vexRT[Ch4] + vexRT[Ch3]);  // (y + x)
-		    motor[bottomRight] = (vexRT [Ch4] - vexRT[Ch3]); // (y - x)
+		    motor[bottomLeft] = (-vexRT[Ch3] - vexRT[Ch4]);  // (-x - y)
+		    motor[bottomRight] = (-vexRT [Ch3] + vexRT[Ch4]); // (-x + y)
 		  }
 	}
 
