@@ -1,4 +1,4 @@
-#pragma config(Motor,  port2,           leftMotor,     tmotorVex393_MC29, openLoop)
+ #pragma config(Motor,  port2,           leftMotor,     tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port3,           rightMotor,    tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port4,           bottomLeft,    tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port5,           bottomRight,   tmotorVex393_MC29, openLoop)
@@ -40,11 +40,11 @@ void ControllerCode(void)
 		int clawSpeed = 127;
 		int clawSpeed2 = -clawSpeed;
 
-		motor[leftMotor]  = (vexRT[Ch2] + vexRT[Ch1])/2;  // (y + x)/2
-		motor[rightMotor] = (vexRT[Ch2] - vexRT[Ch1])/2;  // (y - x)/2
+		motor[leftMotor]  = (vexRT[Ch1] + vexRT[Ch2])/2;  // (y + x)/2
+		motor[rightMotor] = (vexRT[Ch1] - vexRT[Ch2])/2;  // (y - x)/2
 
-		motor[bottomLeft] = (vexRT[Ch3] - vexRT[Ch4]);  // (-x - y)
-		motor[bottomRight] = (vexRT [Ch3] + vexRT[Ch4]); // (-x + y)
+		motor[bottomLeft] = (-vexRT[Ch4] + vexRT[Ch3]);  // (-x - y)
+		motor[bottomRight] = (-vexRT [Ch4] - vexRT[Ch3]); // (-x + y)
 
 
 		if(vexRT[Btn7U] == 1)			// Button 7U makes the arm go up
