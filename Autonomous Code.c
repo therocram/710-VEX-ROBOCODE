@@ -35,7 +35,7 @@ static int armSpeedUp = 127;
 static int armSpeedDown = -armSpeedUp;
 static int clawSpeed = 127;
 static int clawSpeed2 = -clawSpeed;
-static int ConeLoaded = false;  //Starts with no cone loaded
+static bool ConeLoaded = false;  //Starts with no cone loaded
 
 
 void RetractWhenLoaded(void)
@@ -84,6 +84,11 @@ task main()
 		if(ConeLoaded == true) //When a cone is loaded the robot goes full speed ahead
 		{
 			FullSpeedAhead();
+		}
+		if(ConeLoaded == false)
+		{
+			WhoaNellie();
+			StopNow();
 		}
 	}
 

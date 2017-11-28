@@ -48,8 +48,8 @@ void ControllerCode(void)
 		motor[bottomLeft] = (vexRT[Ch4] + vexRT[Ch3]);  // (x + y)
 		motor[bottomRight] = (vexRT [Ch4] - vexRT[Ch3]); // (x - y)
 
-		motor[bottomLeft2] = (vexRT[Ch4] + vexRT[Ch3]);  // (x + y)
-		motor[bottomRight2] = (vexRT [Ch4] - vexRT[Ch3]); // (x - y)
+		motor[bottomLeft2] = (vexRT[Ch4] - vexRT[Ch3]);  // (x - y)
+		motor[bottomRight2] = (vexRT [Ch4] + vexRT[Ch3]); // (x + y)
 
 
 		if(vexRT[Btn7U] == 1)			// Button 7U makes the arm go up
