@@ -78,21 +78,6 @@ void NoConeLoaded(void)
 
 task main()
 {
-	while(1 == 1)
-	{
-		RetractWhenLoaded();
 
-		NoConeLoaded();
-
-		if(ConeLoaded == true) //When a cone is loaded the robot goes full speed ahead
-		{
-			FullSpeedAhead();
-		}
-		if(ConeLoaded == false)
-		{
-			WhoaNellie();
-			StopNow();
-		}
-	}
 
 }
