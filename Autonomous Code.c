@@ -35,7 +35,9 @@ static void StopNow(void) //This just makes it stop
 
 
 
-static int CCsensorDistance = 11; //Claw Cone Sensor Distance for detection is 3cm
+static int CCsensorDistance = 7.62; //Claw Cone Sensor Distance for detection is 7.62cm
+static int FRSDistance = 35.56; //Front Robot Sensor Distance for detection is 35.56 cm
+static int BRSDistance = 17.78; //Back Robot Sensor Distance for detection is 17.78 cm
 static int SpeedForward = 127;
 static int SpeedBackward = -SpeedForward;
 static int armSpeedUp = 127;
@@ -47,11 +49,11 @@ static bool ConeLoaded = false;  //Starts with no cone loaded
 
 void RetractWhenLoaded(void)
 {
-	if(SensorValue[clawSensor] <= CCsensorDistance && ConeLoaded == false) 	//If an object is detected within sensor distance and no cone is loaded then...
+	if((SensorValue[clawSensor] <= CCsensorDistance) && (ConeLoaded == false)) 	//If an object is detected within sensor distance and no cone is loaded then...
 	{
 		motor[clawMotor] = clawSpeed2; 			//Close Claw
 		motor[clawArm] = armSpeedUp;			//Raise Arm up
-		wait(1.5);
+		wait(0.6);
 		motor[clawMotor] = 0; 	//Stop Both
 		motor[clawArm] = 0;
 		ConeLoaded = true;		//Tell program that cone is loaded
@@ -86,38 +88,36 @@ void RetractWhenLoaded(void)
 
 }*/
 
-void LowerArmDown(void)
+static void LowerArmDown(void)
 {
-	if(SensorValue[frontSensor] <= CCsensorDistance && ConeLoaded == true)
-	{
+	/*if((SensorValue[frontSensor] <= CCsensorDistance) && (ConeLoaded == true))
+	{*/
 		motor[clawMotor] = clawSpeed;	//Open claw
 		motor[clawArm] = armSpeedDown;	//Lower arm
 		wait(1.5);
 		motor[clawMotor] = 0; 	//Stop Both
 		motor[clawArm] = 0;
-	}
-	else
-	{
-		motor[clawMotor] = 0; 	//Stop Both
-		motor[clawArm] = 0;
-	}
+		ConeLoaded = false;
+
+
 }
 
 void GetGoing(void)
 {
-	if(SensorValue[backSensor] <= CCsensorDistance)
+	if((SensorValue[backSensor] <= BRSDistance) && (ConeLoaded == true))
 	{
 		motor[bottomLeft] = SpeedForward;
 		motor[bottomRight] = SpeedBackward;
 		motor[bottomLeft2] = SpeedBackward;
 		motor[bottomRight2] = SpeedForward;
 	}
-	else if(SensorValue[frontSensor] <= CCsensorDistance)
+	if((SensorValue[frontSensor] <= FRSDistance) && (ConeLoaded == true))
 	{
 		motor[bottomLeft] = 0;
 		motor[bottomRight] = 0;
 		motor[bottomLeft2] = 0;
 		motor[bottomRight2] = 0;
+		LowerArmDown();
 	}
 }
 
@@ -130,7 +130,6 @@ task main()
 	while(1 == 1)
 	{
 		RetractWhenLoaded();
-		LowerArmDown();
 		GetGoing();
 	}
 
