@@ -61,11 +61,97 @@ void pre_auton()
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
+static int CCsensorDistance = 7.62; //Claw Cone Sensor Distance for detection is 7.62cm
+static int FRSDistance = 35.56; //Front Robot Sensor Distance for detection is 35.56 cm
+static int BRSDistance = 17.78; //Back Robot Sensor Distance for detection is 17.78 cm
+static int SpeedForward = 127;
+static int SpeedBackward = -SpeedForward;
+static int armSpeedUp = 127;
+static int armSpeedDown = -armSpeedUp;
+static int clawSpeed = 127;
+static int clawSpeed2 = -clawSpeed;
+static bool ConeLoaded = false;  //Starts with no cone loaded
+
+
+void RetractWhenLoaded(void)
+{
+	if((SensorValue[clawSensor] <= CCsensorDistance) && (ConeLoaded == false)) 	//If an object is detected within sensor distance and no cone is loaded then...
+	{
+		motor[clawMotor] = clawSpeed2; 			//Close Claw
+		motor[clawArm] = armSpeedUp;			//Raise Arm up
+		wait(0.6);
+		motor[clawMotor] = 0; 	//Stop Both
+		motor[clawArm] = 0;
+		ConeLoaded = true;		//Tell program that cone is loaded
+
+		/*startMotor(clawMotor, clawSpeed2); 			//Close Claw
+		startMotor(clawArm, armSpeedDown);			//Raise Arm up
+		wait(0.5);
+		stopMotor(clawMotor); 		//Stop both
+		stopMotor(clawArm);
+		ConeLoaded = true; 			//Tell program that cone is loaded */
+	}
+	else
+	{
+		motor[clawMotor] = 0; 	//Stop Both
+		motor[clawArm] = 0;
+
+		/*motor[clawArm] = 0;
+		motor[clawMotor] = 0;*/
+	}
+}
+
+/*void NoConeLoaded(void)
+{
+	if(ConeLoaded == false)		//If no cone is loaded then...
+	{
+		startMotor(clawMotor, clawSpeed);		//Open claw
+		startMotor(clawArm, armSpeedDown);	//Lower arm
+		wait(1);
+		stopMotor(clawMotor);
+		stopMotor(clawArm);
+	}
+
+}*/
+
+static void LowerArmDown(void)
+{
+	/*if((SensorValue[frontSensor] <= CCsensorDistance) && (ConeLoaded == true))
+	{*/
+		motor[clawMotor] = clawSpeed;	//Open claw
+		motor[clawArm] = armSpeedDown;	//Lower arm
+		wait(1.5);
+		motor[clawMotor] = 0; 	//Stop Both
+		motor[clawArm] = 0;
+		ConeLoaded = false;
+
+
+}
+
+void GetGoing(void)
+{
+	if((SensorValue[backSensor] <= BRSDistance) && (ConeLoaded == true))
+	{
+		motor[bottomLeft] = SpeedForward;
+		motor[bottomRight] = SpeedBackward;
+		motor[bottomLeft2] = SpeedBackward;
+		motor[bottomRight2] = SpeedForward;
+	}
+	if((SensorValue[frontSensor] <= FRSDistance) && (ConeLoaded == true))
+	{
+		motor[bottomLeft] = 0;
+		motor[bottomRight] = 0;
+		motor[bottomLeft2] = 0;
+		motor[bottomRight2] = 0;
+		LowerArmDown();
+	}
+}
 
 
 task autonomous()
 {
-
+	RetractWhenLoaded();
+	GetGoing();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -86,8 +172,8 @@ void ControllerCode(void)
 		int clawSpeed = 127;
 		int clawSpeed2 = -clawSpeed;
 
-		motor[leftMotor]  = (vexRT[Ch1] + vexRT[Ch2])/2;  // (x + y)/2
-		motor[rightMotor] = (vexRT[Ch1] - vexRT[Ch2])/2;  // (x - y)/2
+		motor[leftMotor]  = (vexRT[Ch2] + vexRT[Ch1])/2;  // (x + y)/2
+		motor[rightMotor] = (vexRT[Ch2] - vexRT[Ch1])/2;  // (x - y)/2
 
 		motor[bottomLeft] = (vexRT[Ch4] + vexRT[Ch3]);  // (x + y)
 		motor[bottomRight] = (vexRT [Ch4] - vexRT[Ch3]); // (x - y)
@@ -131,6 +217,7 @@ void ControllerCode(void)
 
 	}
 }
+
 
 
 task usercontrol()
