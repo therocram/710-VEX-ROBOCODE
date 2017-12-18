@@ -172,8 +172,8 @@ void ControllerCode(void)
 		int clawSpeed = 127;
 		int clawSpeed2 = -clawSpeed;
 
-		motor[leftMotor]  = (vexRT[Ch2] + vexRT[Ch1])/2;  // (x + y)/2
-		motor[rightMotor] = (vexRT[Ch2] - vexRT[Ch1])/2;  // (x - y)/2
+		motor[leftMotor]  = (vexRT[Ch2] + vexRT[Ch1]);  // (x + y)/2
+		motor[rightMotor] = (vexRT[Ch2] - vexRT[Ch1]);  // (x - y)/2
 
 		motor[bottomLeft] = (vexRT[Ch4] + vexRT[Ch3]);  // (x + y)
 		motor[bottomRight] = (vexRT [Ch4] - vexRT[Ch3]); // (x - y)
