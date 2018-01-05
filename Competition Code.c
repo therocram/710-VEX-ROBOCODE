@@ -147,11 +147,24 @@ void GetGoing(void)
 	}
 }
 
+void GoForward(void)
+{
+		motor[bottomLeft] = SpeedForward;
+		motor[bottomRight] = SpeedBackward;
+		motor[bottomLeft2] = SpeedBackward;
+		motor[bottomRight2] = SpeedForward;
+		wait(3);
+		motor[bottomLeft] = 0;
+		motor[bottomRight] = 0;
+		motor[bottomLeft2] = 0;
+		motor[bottomRight2] = 0;
+
+}
+
 
 task autonomous()
 {
-	RetractWhenLoaded();
-	GetGoing();
+	GoForward();
 }
 
 /*---------------------------------------------------------------------------*/
