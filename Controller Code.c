@@ -42,29 +42,32 @@ void ControllerCode(void)
 		int clawSpeed = 127;
 		int clawSpeed2 = -clawSpeed;
 
-		motor[bottomARM]  = (vexRT[Ch2] + vexRT[Ch1]);  // (x + y)/2
-		motor[rightMotor] = (vexRT[Ch2] - vexRT[Ch1]);  // (x - y)/2
+		motor[liftMotor]  = (vexRT[Ch2] + vexRT[Ch1]);  // (x + y)/2
+		//motor[topARM] = (vexRT[Ch2] - vexRT[Ch1]);  // (x - y)/2
 
-		motor[bottomLeft] = (vexRT[Ch4] + vexRT[Ch3]);  // (x + y)
-		motor[bottomRight] = (vexRT [Ch4] - vexRT[Ch3]); // (x - y)
+		motor[frontLeft] = (vexRT[Ch4] + vexRT[Ch3]);  // (x + y)
+		motor[frontRight] = (vexRT [Ch4] - vexRT[Ch3]); // (x - y)
 
-		motor[bottomLeft2] = (vexRT[Ch4] - vexRT[Ch3]);  // (x - y)
-		motor[bottomRight2] = (vexRT [Ch4] + vexRT[Ch3]); // (x + y)
+		motor[rearLeft] = (vexRT[Ch4] - vexRT[Ch3]);  // (x - y)
+		motor[rearRight] = (vexRT [Ch4] + vexRT[Ch3]); // (x + y)
 
 
 		if(vexRT[Btn7U] == 1)			// Button 7U makes the arm go up
 		{
-			motor[clawArm] = armSpeedUp;
+			motor[bottomARM] = armSpeedUp;
+			motor[topARM] = armSpeedUp;
 		}
 
 		else if(vexRT[Btn7D] == 1)  //Buton 7D makes the arm go down
 		{
-			motor[clawArm] = armSpeedDown;
+			motor[bottomARM] = armSpeedDown;
+			motor[topARM] = armSpeedDown;
 		}
 
 		else
 		{
-			motor[clawArm] = 0;
+			motor[bottomARM] = 0;
+			motor[topARM] = 0;
 		}
 
 
@@ -74,7 +77,7 @@ void ControllerCode(void)
 			motor[clawMotor] = clawSpeed;
 		}
 
-		else if(vexRT[Btn8R] == 1)	// Button 7R makes the claw close
+		else if(vexRT[Btn7R] == 1)	// Button 7R makes the claw close
 		{
 			motor[clawMotor] = clawSpeed2;
 		}
