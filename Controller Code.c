@@ -48,43 +48,52 @@ void ControllerCode(void)
 		motor[frontLeft] = (vexRT[Ch4] + vexRT[Ch3]);  // (x + y)
 		motor[frontRight] = (vexRT [Ch4] - vexRT[Ch3]); // (x - y)
 
-		motor[rearLeft] = (vexRT[Ch4] - vexRT[Ch3]);  // (x - y)
-		motor[rearRight] = (vexRT [Ch4] + vexRT[Ch3]); // (x + y)
+		motor[rearLeft] = (vexRT[Ch4] + vexRT[Ch3]);  // (x - y)
+		motor[rearRight] = (vexRT [Ch4] - vexRT[Ch3]); // (x + y)
 
 
 		if(vexRT[Btn7U] == 1)			// Button 7U makes the arm go up
 		{
-			motor[bottomARM] = armSpeedUp;
-			motor[topARM] = armSpeedUp;
+			motor[topARM] = armSpeedDown;
 		}
 
 		else if(vexRT[Btn7D] == 1)  //Buton 7D makes the arm go down
 		{
+			motor[topARM] = armSpeedUp;
+		}
+
+		else
+		{
+			motor[topARM] = 0;
+		}
+
+
+
+		if(vexRT[Btn8U] == 1)			// Button 8U makes the arm go up
+		{
+			motor[bottomARM] = armSpeedUp;
+		}
+
+		else if(vexRT[Btn8D] == 1)  //Buton 8D makes the arm go down
+		{
 			motor[bottomARM] = armSpeedDown;
-			motor[topARM] = armSpeedDown;
 		}
 
 		else
 		{
 			motor[bottomARM] = 0;
-			motor[topARM] = 0;
 		}
 
 
 
 		if(vexRT[Btn7L] == 1)  //Button 7L makes the claw open
 		{
-			motor[clawMotor] = clawSpeed;
+			motor[clawMotor] = 127;
 		}
 
-		else if(vexRT[Btn7R] == 1)	// Button 7R makes the claw close
+		else									 //Otherwise claw stays closed
 		{
-			motor[clawMotor] = clawSpeed2;
-		}
-
-		else
-		{
-			motor[clawMotor] = 0;
+			motor[clawMotor] = 70;
 		}
 
 
