@@ -1,5 +1,5 @@
-#pragma config(Motor,  port2,           bottomARM,     tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port3,           liftMotor,     tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port2,           liftMotor,     tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port3,           bottomARM,     tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port4,           rearLeft,      tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port5,           rearRight,     tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port6,           frontLeft,     tmotorVex393_MC29, openLoop)
@@ -42,7 +42,7 @@ void ControllerCode(void)
 		int clawSpeed = 127;
 		int clawSpeed2 = -clawSpeed;
 
-		motor[liftMotor]  = (vexRT[Ch2] + vexRT[Ch1]);  // (x + y)/2
+		motor[liftMotor]  = (-vexRT[Ch2] - vexRT[Ch1]);  // (x + y)/2
 		//motor[topARM] = (vexRT[Ch2] - vexRT[Ch1]);  // (x - y)/2
 
 		motor[frontLeft] = (vexRT[Ch4] + vexRT[Ch3]);  // (x + y)
