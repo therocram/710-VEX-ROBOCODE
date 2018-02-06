@@ -86,7 +86,7 @@ void ControllerCode(void)
 
 
 
-		if(vexRT[Btn7L] == 1)  //Button 7L makes the claw open
+		if(vexRT[Btn8R] == 1)  //Button 7L makes the claw open
 		{
 			motor[clawMotor] = 127;
 		}

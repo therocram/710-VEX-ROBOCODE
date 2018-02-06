@@ -1,14 +1,11 @@
-#pragma config(Motor,  port2,           leftMotor,     tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port3,           rightMotor,    tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port4,           bottomLeft,    tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port5,           bottomRight,   tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port6,           clawArm,       tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port7,           clawMotor,     tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port8,           bottomLeft2,   tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port9,           bottomRight2,  tmotorVex393_MC29, openLoop)
-#pragma config(Sensor, dgtl1,  clawSensor,     sensorSONAR_cm)
-#pragma config(Sensor, dgtl3,  frontSensor,    sensorSONAR_cm)
-#pragma config(Sensor, dgtl5,  backSensor,     sensorSONAR_cm)
+#pragma config(Motor,  port2,           liftMotor,     tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port3,           bottomARM,     tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port4,           rearLeft,      tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port5,           rearRight,     tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port6,           frontLeft,     tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port7,           topARM,        tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port8,           frontRight,    tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port9,           clawMotor,     tmotorVex393_MC29, openLoop)
 
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
@@ -49,6 +46,7 @@ void pre_auton()
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
+  motor[clawMotor] = 127;
 }
 
 /*---------------------------------------------------------------------------*/
@@ -72,99 +70,85 @@ static int clawSpeed = 127;
 static int clawSpeed2 = -clawSpeed;
 static bool ConeLoaded = false;  //Starts with no cone loaded
 
-
-void RetractWhenLoaded(void)
-{
-	if((SensorValue[clawSensor] <= CCsensorDistance) && (ConeLoaded == false)) 	//If an object is detected within sensor distance and no cone is loaded then...
-	{
-		motor[clawMotor] = clawSpeed2; 			//Close Claw
-		motor[clawArm] = armSpeedUp;			//Raise Arm up
-		wait(0.6);
-		motor[clawMotor] = 0; 	//Stop Both
-		motor[clawArm] = 0;
-		ConeLoaded = true;		//Tell program that cone is loaded
-
-		/*startMotor(clawMotor, clawSpeed2); 			//Close Claw
-		startMotor(clawArm, armSpeedDown);			//Raise Arm up
-		wait(0.5);
-		stopMotor(clawMotor); 		//Stop both
-		stopMotor(clawArm);
-		ConeLoaded = true; 			//Tell program that cone is loaded */
-	}
-	else
-	{
-		motor[clawMotor] = 0; 	//Stop Both
-		motor[clawArm] = 0;
-
-		/*motor[clawArm] = 0;
-		motor[clawMotor] = 0;*/
-	}
-}
-
-/*void NoConeLoaded(void)
-{
-	if(ConeLoaded == false)		//If no cone is loaded then...
-	{
-		startMotor(clawMotor, clawSpeed);		//Open claw
-		startMotor(clawArm, armSpeedDown);	//Lower arm
-		wait(1);
-		stopMotor(clawMotor);
-		stopMotor(clawArm);
-	}
-
-}*/
-
-static void LowerArmDown(void)
-{
-	/*if((SensorValue[frontSensor] <= CCsensorDistance) && (ConeLoaded == true))
-	{*/
-		motor[clawMotor] = clawSpeed;	//Open claw
-		motor[clawArm] = armSpeedDown;	//Lower arm
-		wait(1.5);
-		motor[clawMotor] = 0; 	//Stop Both
-		motor[clawArm] = 0;
-		ConeLoaded = false;
-
-
-}
-
-void GetGoing(void)
-{
-	if((SensorValue[backSensor] <= BRSDistance) && (ConeLoaded == true))
-	{
-		motor[bottomLeft] = SpeedForward;
-		motor[bottomRight] = SpeedBackward;
-		motor[bottomLeft2] = SpeedBackward;
-		motor[bottomRight2] = SpeedForward;
-	}
-	if((SensorValue[frontSensor] <= FRSDistance) && (ConeLoaded == true))
-	{
-		motor[bottomLeft] = 0;
-		motor[bottomRight] = 0;
-		motor[bottomLeft2] = 0;
-		motor[bottomRight2] = 0;
-		LowerArmDown();
-	}
-}
-
 void GoForward(void)
 {
-		motor[bottomLeft] = SpeedForward;
-		motor[bottomRight] = SpeedBackward;
-		motor[bottomLeft2] = SpeedBackward;
-		motor[bottomRight2] = SpeedForward;
-		wait(3);
-		motor[bottomLeft] = 0;
-		motor[bottomRight] = 0;
-		motor[bottomLeft2] = 0;
-		motor[bottomRight2] = 0;
+		motor[frontLeft] = SpeedForward;
+		motor[frontRight] = SpeedBackward;
+		motor[rearLeft] = SpeedForward;
+		motor[rearRight] = SpeedBackward;
+		wait(3.25);
+		motor[frontRight] = SpeedForward;
+		motor[rearRight] = SpeedForward;
+		motor[frontLeft] = SpeedForward;
+		motor[rearLeft] = SpeedForward;
+		wait(0.5);
+		motor[frontLeft] = 0;
+		motor[frontRight] = 0;
+		motor[rearLeft] = 0;
+		motor[rearRight] = 0;
 
 }
+
+void RaiseClaw(void)
+{
+	motor[topARM] = armSpeedDown;
+	wait(1.5);
+	motor[topARM] = 0;
+}
+
+void LowerClaw(void)
+{
+	motor[topARM] = armSpeedUp;
+	wait(1.5);
+	motor[topARM] = 0;
+}
+
+void CloseClaw(void)
+{
+	motor[clawMotor] = 70;
+}
+
+void OpenClaw(void)
+{
+	motor[clawMotor] = 127;
+}
+
+void SkipTown(void)
+{
+	motor[frontLeft] = SpeedBackward;
+	motor[frontRight] = SpeedForward;
+	motor[rearLeft] = SpeedBackward;
+	motor[rearRight] = SpeedForward;
+	wait(0.5);
+	motor[frontLeft] = 0;
+	motor[frontRight] = 0;
+	motor[rearLeft] = 0;
+	motor[rearRight] = 0;
+}
+
+void Premptive(void)
+{
+	motor[clawMotor] = 127;
+	wait(0.25);
+	motor[topARM] = armSpeedDown;
+	wait(0.25);
+	motor[topARM] = 0;
+}
+
 
 
 task autonomous()
 {
+	Premptive();
+	CloseClaw();
+	wait(0.15);
+	RaiseClaw();
 	GoForward();
+	LowerClaw();
+	OpenClaw();
+	wait(0.15);
+	RaiseClaw();
+	SkipTown();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -185,47 +169,78 @@ void ControllerCode(void)
 		int clawSpeed = 127;
 		int clawSpeed2 = -clawSpeed;
 
-		motor[leftMotor]  = (vexRT[Ch2] + vexRT[Ch1]);  // (x + y)/2
-		motor[rightMotor] = (vexRT[Ch2] - vexRT[Ch1]);  // (x - y)/2
+		motor[liftMotor]  = (-vexRT[Ch2] - vexRT[Ch1]);  // (x + y)/2
+		//motor[topARM] = (vexRT[Ch2] - vexRT[Ch1]);  // (x - y)/2
 
-		motor[bottomLeft] = (vexRT[Ch4] + vexRT[Ch3]);  // (x + y)
-		motor[bottomRight] = (vexRT [Ch4] - vexRT[Ch3]); // (x - y)
+		motor[frontLeft] = (vexRT[Ch4] + vexRT[Ch3]);  // (x + y)
+		motor[frontRight] = (vexRT [Ch4] - vexRT[Ch3]); // (x - y)
 
-		motor[bottomLeft2] = (vexRT[Ch4] - vexRT[Ch3]);  // (x - y)
-		motor[bottomRight2] = (vexRT [Ch4] + vexRT[Ch3]); // (x + y)
+		motor[rearLeft] = (vexRT[Ch4] + vexRT[Ch3]);  // (x - y)
+		motor[rearRight] = (vexRT [Ch4] - vexRT[Ch3]); // (x + y)
 
 
 		if(vexRT[Btn7U] == 1)			// Button 7U makes the arm go up
 		{
-			motor[clawArm] = armSpeedUp;
+			motor[topARM] = armSpeedDown;
 		}
 
 		else if(vexRT[Btn7D] == 1)  //Buton 7D makes the arm go down
 		{
-			motor[clawArm] = armSpeedDown;
+			motor[topARM] = armSpeedUp;
 		}
 
 		else
 		{
-			motor[clawArm] = 0;
+			motor[topARM] = 0;
 		}
 
 
 
-		if(vexRT[Btn7L] == 1)  //Button 7L makes the claw open
+		if(vexRT[Btn8U] == 1)			// Button 8U makes the arm go up
 		{
-			motor[clawMotor] = clawSpeed;
+			motor[bottomARM] = armSpeedUp;
 		}
 
-		else if(vexRT[Btn8R] == 1)	// Button 7R makes the claw close
+		else if(vexRT[Btn8D] == 1)  //Buton 8D makes the arm go down
 		{
-			motor[clawMotor] = clawSpeed2;
+			motor[bottomARM] = armSpeedDown;
 		}
 
 		else
 		{
-			motor[clawMotor] = 0;
+			motor[bottomARM] = 0;
 		}
+
+
+
+		if(vexRT[Btn8R] == 1)  //Button 7L makes the claw open
+		{
+			motor[clawMotor] = 127;
+		}
+
+		else									 //Otherwise claw stays closed
+		{
+			motor[clawMotor] = 70;
+		}
+
+		if(vexRT[Btn5U] == 1) //Button 5U makes both arms go up
+		{
+			motor[topARM] = armSpeedDown;
+			motor[bottomARM] = armSpeedUp;
+			wait(1.5);
+			motor[topARM] = 0;
+			motor[bottomARM] = 0;
+		}
+
+		if(vexRT[Btn5D] == 1)  //Button 5D makes both arms go down
+		{
+			motor[topARM] = armSpeedUp;
+			motor[bottomARM] = armSpeedDown;
+			wait(1.5);
+			motor[topARM] = 0;
+			motor[bottomARM] = 0;
+		}
+
 
 
 	}

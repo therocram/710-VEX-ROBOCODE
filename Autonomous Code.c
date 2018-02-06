@@ -47,7 +47,7 @@ static int clawSpeed2 = -clawSpeed;
 static bool ConeLoaded = false;  //Starts with no cone loaded
 
 
-void RetractWhenLoaded(void)
+/*void RetractWhenLoaded(void)
 {
 	if((SensorValue[clawSensor] <= CCsensorDistance) && (ConeLoaded == false)) 	//If an object is detected within sensor distance and no cone is loaded then...
 	{
@@ -58,14 +58,14 @@ void RetractWhenLoaded(void)
 		motor[clawMotor] = 0; 	//Stop Both
 		motor[topARM] = 0;			//Raise Arm up
 		motor[bottomARM] = 0;
-		ConeLoaded = true;		//Tell program that cone is loaded
+		ConeLoaded = true;		//Tell program that cone is loaded */
 
 		/*startMotor(clawMotor, clawSpeed2); 			//Close Claw
 		startMotor(clawArm, armSpeedDown);			//Raise Arm up
 		wait(0.5);
 		stopMotor(clawMotor); 		//Stop both
 		stopMotor(clawArm);
-		ConeLoaded = true; 			//Tell program that cone is loaded */
+		ConeLoaded = true; 			//Tell program that cone is loaded
 	}
 	else
 	{
@@ -73,8 +73,8 @@ void RetractWhenLoaded(void)
 		motor[topARM] = 0;
 		motor[bottomARM] = 0;
 
-		/*motor[clawArm] = 0;
-		motor[clawMotor] = 0;*/
+		motor[clawArm] = 0;
+		motor[clawMotor] = 0;
 	}
 }
 
@@ -91,23 +91,23 @@ void RetractWhenLoaded(void)
 
 }*/
 
-static void LowerArmDown(void)
+/*static void LowerArmDown(void)
 {
-	/*if((SensorValue[frontSensor] <= CCsensorDistance) && (ConeLoaded == true))
-	{*/
+		if((SensorValue[frontSensor] <= CCsensorDistance) && (ConeLoaded == true))
+	{
 		motor[clawMotor] = clawSpeed;	//Open claw
 		motor[topARM] = armSpeedDown;	//Lower arm
 		motor[bottomARM] = armSpeedDown;
 		wait(1.5);
 		motor[clawMotor] = 0; 	//Stop Both
-			motor[topARM] = 0;
+		motor[topARM] = 0;
 		motor[bottomARM] = 0;
 		ConeLoaded = false;
 
 
 }
 
-void GetGoing(void)
+/*void GetGoing(void)
 {
 	if((SensorValue[backSensor] <= BRSDistance) && (ConeLoaded == true))
 	{
@@ -124,7 +124,7 @@ void GetGoing(void)
 		motor[rearRight] = 0;
 		LowerArmDown();
 	}
-}
+} */
 
 void GoForward(void)
 {
@@ -140,14 +140,55 @@ void GoForward(void)
 
 }
 
+void RaiseClaw(void)
+{
+	motor[topARM] = armSpeedDown;
+	wait(1.5);
+	motor[topARM] = 0;
+}
+
+void LowerClaw(void)
+{
+	motor[topARM] = armSpeedUp;
+	wait(1.5);
+	motor[topARM] = 0;
+}
+
+void CloseClaw(void)
+{
+	motor[clawMotor] = 70;
+}
+
+void OpenClaw(void)
+{
+	motor[clawMotor] = 127;
+}
+
+void SkipTown(void)
+{
+	motor[frontLeft] = SpeedBackward;
+	motor[frontRight] = SpeedForward;
+	motor[rearLeft] = SpeedForward;
+	motor[rearRight] = SpeedBackward;
+	wait(0.5);
+	motor[frontLeft] = 0;
+	motor[frontRight] = 0;
+	motor[rearLeft] = 0;
+	motor[rearRight] = 0;
+}
+
 
 
 
 task main()
 {
-	while(1 == 1)
-	{
-		GoForward();
-	}
+	CloseClaw();
+	RaiseClaw();
+	GoForward();
+	LowerClaw();
+	OpenClaw();
+	RaiseClaw();
+	SkipTown();
+
 
 }
