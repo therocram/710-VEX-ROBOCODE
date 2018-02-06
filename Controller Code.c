@@ -96,6 +96,25 @@ void ControllerCode(void)
 			motor[clawMotor] = 70;
 		}
 
+		if(vexRT[Btn5U] == 1) //Button 5U makes both arms go up
+		{
+			motor[topARM] = armSpeedDown;
+			motor[bottomARM] = armSpeedUp;
+			wait(1.5);
+			motor[topARM] = 0;
+			motor[bottomARM] = 0;
+		}
+
+		if(vexRT[Btn5D] == 1)  //Button 5D makes both arms go down
+		{
+			motor[topARM] = armSpeedUp;
+			motor[bottomARM] = armSpeedDown;
+			wait(1.5);
+			motor[topARM] = 0;
+			motor[bottomARM] = 0;
+		}
+
+
 
 	}
 }
