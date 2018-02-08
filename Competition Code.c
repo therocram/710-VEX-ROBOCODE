@@ -76,12 +76,12 @@ void GoForward(void)
 		motor[frontRight] = SpeedBackward;
 		motor[rearLeft] = SpeedForward;
 		motor[rearRight] = SpeedBackward;
-		wait(3.25);
-		motor[frontRight] = SpeedForward;
+		wait(0.5);
+		/*motor[frontRight] = SpeedForward;
 		motor[rearRight] = SpeedForward;
 		motor[frontLeft] = SpeedForward;
 		motor[rearLeft] = SpeedForward;
-		wait(0.5);
+		wait(0.5);*/
 		motor[frontLeft] = 0;
 		motor[frontRight] = 0;
 		motor[rearLeft] = 0;
@@ -92,8 +92,10 @@ void GoForward(void)
 void RaiseClaw(void)
 {
 	motor[topARM] = armSpeedDown;
+	motor[bottomARM] = armSpeedUp;
 	wait(1.5);
 	motor[topARM] = 0;
+	motor[bottomARM] = 0;
 }
 
 void LowerClaw(void)
@@ -146,9 +148,9 @@ task autonomous()
 	GoForward();
 	LowerClaw();
 	OpenClaw();
-	wait(0.15);
+	/*wait(0.15);
 	RaiseClaw();
-	SkipTown();
+	SkipTown();*/
 }
 
 /*---------------------------------------------------------------------------*/
@@ -236,8 +238,9 @@ void ControllerCode(void)
 		{
 			motor[topARM] = armSpeedUp;
 			motor[bottomARM] = armSpeedDown;
-			wait(1.5);
+			wait(1);
 			motor[topARM] = 0;
+			wait(0.5);
 			motor[bottomARM] = 0;
 		}
 
