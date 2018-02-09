@@ -76,7 +76,7 @@ void GoForward(void)
 		motor[frontRight] = SpeedBackward;
 		motor[rearLeft] = SpeedForward;
 		motor[rearRight] = SpeedBackward;
-		wait(0.5);
+		wait(0.75);
 		/*motor[frontRight] = SpeedForward;
 		motor[rearRight] = SpeedForward;
 		motor[frontLeft] = SpeedForward;
@@ -101,16 +101,18 @@ void RaiseClaw(void)
 void LowerClaw(void)
 {
 	motor[topARM] = armSpeedUp;
-	wait(1.5);
+	wait(1);
+	motor[clawMotor] = 127;
+	wait(0.5);
 	motor[topARM] = 0;
 }
 
-void CloseClaw(void)
+static void CloseClaw(void)
 {
 	motor[clawMotor] = 70;
 }
 
-void OpenClaw(void)
+static void OpenClaw(void)
 {
 	motor[clawMotor] = 127;
 }
@@ -131,7 +133,9 @@ void SkipTown(void)
 void Premptive(void)
 {
 	motor[clawMotor] = 127;
-	wait(0.25);
+	wait(0.5);
+	CloseClaw();
+	wait(0.5);
 	motor[topARM] = armSpeedDown;
 	wait(0.25);
 	motor[topARM] = 0;
