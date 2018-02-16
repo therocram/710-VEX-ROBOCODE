@@ -26,5 +26,16 @@
  * The autonomous task may exit, unlike operatorControl() which should never exit. If it does
  * so, the robot will await a switch to another mode or disable/enable cycle.
  */
-void autonomous() {
+ static int SpeedForward = 127;
+ static int SpeedBackward = -SpeedForward;
+ static int armSpeedUp = 127;
+ static int armSpeedDown = -armSpeedUp;
+ static int clawSpeed = 127;
+ static int clawSpeed2 = -clawSpeed;
+
+
+
+void autonomous() 
+{
+
 }
