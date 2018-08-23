@@ -219,14 +219,19 @@ void ControllerCode(void)
 
 
 
-		if(vexRT[Btn8R] == 1)  //Button 7L makes the claw open
+		if(vexRT[Btn8R] == 1)  //Button 8R makes the claw open
 		{
 			motor[clawMotor] = 127;
 		}
 
+		else if(vexRT[Btn8L] == 1) //Button 8L makes the claw close
+		{
+			motor[clawMotor] = -127;
+		}
+
 		else									 //Otherwise claw stays closed
 		{
-			motor[clawMotor] = 70;
+			motor[clawMotor] = 0;
 		}
 
 		if(vexRT[Btn5U] == 1) //Button 5U makes both arms go up
