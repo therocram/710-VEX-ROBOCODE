@@ -1,4 +1,4 @@
-#pragma config(Motor,  port1,           leftB,         tmotorVex393_HBridge, openLoop)
+#pragma config(Motor,  port1,           leftB,         tmotorVex393_HBridge, openLoop, reversed)
 #pragma config(Motor,  port2,           leftF,         tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port3,           rightB,        tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port4,           rightF,        tmotorVex393_MC29, openLoop)
@@ -7,8 +7,16 @@
 
 task main()
 {
+	while(1)
+	{
+
+		motor[leftF] = (vexRT[Ch4] + vexRT[Ch3]);  // (x + y)
+		motor[rightF] = (vexRT [Ch4] - vexRT[Ch3]); // (x - y)
+
+		motor[leftB] = (vexRT[Ch4] + vexRT[Ch3]);  // (x - y)
+		motor[rightB] = (vexRT [Ch4] - vexRT[Ch3]); // (x + y)
 
 
-
+	}
 
 }
