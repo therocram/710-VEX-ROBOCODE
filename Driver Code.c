@@ -10,11 +10,11 @@ task main()
 	while(1)
 	{
 
-		motor[leftF] = (vexRT[Ch4] + vexRT[Ch3]);  // (x + y)
-		motor[rightF] = (vexRT [Ch4] - vexRT[Ch3]); // (x - y)
+		motor[leftF] = (-vexRT[Ch4] + vexRT[Ch3]);
+		motor[rightF] = (vexRT [Ch4] + vexRT[Ch3]);
 
-		motor[leftB] = (vexRT[Ch4] + vexRT[Ch3]);  // (x - y)
-		motor[rightB] = (vexRT [Ch4] - vexRT[Ch3]); // (x + y)
+		motor[leftB] = (-vexRT[Ch4] + vexRT[Ch3]);
+		motor[rightB] = (vexRT [Ch4] + vexRT[Ch3]);
 
 
 	}
