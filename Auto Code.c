@@ -35,3 +35,31 @@ task main()
 
 
 }
+
+
+static void temp()
+{
+	int speedFront = -127;
+	int speedBack = 127;
+
+	motor[frontRightMotor] = speedFront;
+  motor[backRightMotor]  = speedBack;
+  ////////////
+  motor[frontLeftMotor] = speedFront;
+  motor[backLeftMotor]  = speedBack;
+  ////////////
+  wait(1.0);
+  ////////////
+  motor[frontRightMotor] = speedFront;
+  motor[backRightMotor]  = speedBack;
+  ////////////
+  motor[frontLeftMotor] = -speedFront;
+  motor[backLeftMotor]  = -speedBack;
+  ////////////
+  wait(1.0);
+  motor[frontRightMotor] = speedFront;
+  motor[backRightMotor]  = speedBack;
+  ////////////
+  motor[frontLeftMotor] = speedFront;
+  motor[backLeftMotor]  = speedBack;
+}
