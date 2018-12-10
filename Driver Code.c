@@ -1,7 +1,7 @@
 #pragma config(Motor,  port1,           backLeftMotor, tmotorVex393_HBridge, openLoop)
 #pragma config(Motor,  port2,           frontLeftMotor, tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port3,           claw,          tmotorServoStandard, openLoop)
-#pragma config(Motor,  port5,           stasis,        tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port5,           stasis,        tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port6,           lift,          tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port8,           frontRightMotor, tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port9,           backRightMotor, tmotorVex393_MC29, openLoop, reversed)
@@ -10,6 +10,7 @@
 task main()
 {
   int servoInitial = motor[claw];
+  bool stasisOn = false;
 
 	while(1 == 1)
   {
@@ -25,16 +26,23 @@ task main()
     if(vexRT[Btn5U] == 1)
     {
     	motor[stasis] = 127;
+    	stasisOn = true;
     }
 
     else if(vexRT[Btn5D] == 1)
     {
     	motor[stasis] = -127;
+    	stasisOn = false
+    }
+
+    else if(stasisOn)
+    {
+    	motor[stasis] = 25;
     }
 
     else
     {
-    	motor[stasis] = 10;
+    	motor[stasis] = 0;
     }
 
     ///////////////////////
@@ -58,17 +66,17 @@ task main()
 
     if(vexRT[Btn8L] == 1)
     {
-    	motor[lift] = 127;
+    	motor[claw] = 127;
     }
 
     else if(vexRT[Btn8R] == 1)
     {
-    	motor[lift] = -127;
+    	motor[claw] = -127;
     }
 
     else
     {
-    	motor[lift] = servoInitial;
+    	motor[claw] = servoInitial;
     }
 
   }
