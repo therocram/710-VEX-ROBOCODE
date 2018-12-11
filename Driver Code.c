@@ -32,7 +32,7 @@ task main()
     else if(vexRT[Btn5D] == 1)
     {
     	motor[stasis] = -127;
-    	stasisOn = false
+    	stasisOn = false;
     }
 
     else if(stasisOn)
