@@ -37,7 +37,7 @@ task main()
 
     else if(stasisOn)
     {
-    	motor[stasis] = 25;
+    	motor[stasis] = 15;
     }
 
     else
