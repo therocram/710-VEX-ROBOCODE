@@ -74,10 +74,7 @@ task main()
     	motor[claw] = -127;
     }
 
-    else
-    {
-    	motor[claw] = servoInitial;
-    }
+
 
   }
 }

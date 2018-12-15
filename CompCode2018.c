@@ -82,7 +82,8 @@ task usercontrol()
 {
   // User control code here, inside the loop
 
-	int servoInitial = motor[claw];
+	//int servoInitial = motor[claw];
+  bool stasisOn = false;
 
   while (true)
   {
@@ -98,11 +99,18 @@ task usercontrol()
     if(vexRT[Btn5U] == 1)
     {
     	motor[stasis] = 127;
+    	stasisOn = true;
     }
 
     else if(vexRT[Btn5D] == 1)
     {
     	motor[stasis] = -127;
+    	stasisOn = false;
+    }
+
+    else if(stasisOn)
+    {
+    	motor[stasis] = 15;
     }
 
     else
@@ -131,17 +139,12 @@ task usercontrol()
 
     if(vexRT[Btn8L] == 1)
     {
-    	motor[lift] = 127;
+    	motor[claw] = 127;
     }
 
     else if(vexRT[Btn8R] == 1)
     {
-    	motor[lift] = -127;
-    }
-
-    else
-    {
-    	motor[lift] = servoInitial;
+    	motor[claw] = -127;
     }
   }
 }
