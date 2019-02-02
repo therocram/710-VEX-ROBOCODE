@@ -80,6 +80,77 @@ task autonomous()
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
+task drive()
+{
+	while(true)
+	{
+		//Right side of the robot is controlled by the right joystick, Y-axis
+    motor[frontRightMotor] = -vexRT[Ch2];
+    motor[backRightMotor]  = vexRT[Ch2];
+    //Left side of the robot is controlled by the left joystick, Y-axis
+    motor[frontLeftMotor] = -vexRT[Ch3];
+   	motor[backLeftMotor]  = vexRT[Ch3];
+  }
+}
+
+task clawRun()
+{
+	while(true)
+	{
+		///////////////////////a
+
+    if(vexRT[Btn8R] == 1)
+    {
+    	SensorValue[clawEncoder] = 0;
+
+    	while(SensorValue[clawEncoder] < 130)
+			{
+				motor[claw] = 127;
+			}
+
+			motor[claw] = 0;
+    }
+
+    else if(vexRT[Btn8L] == 1)
+    {
+    	SensorValue[clawEncoder] = 0;
+
+    	while(SensorValue[clawEncoder] > -130)
+    	{
+    		motor[claw] = -127;
+    	}
+
+    	motor[claw] = 0;
+    }
+
+    ///////////////////////b
+
+    if(vexRT[Btn7R] == 1)
+    {
+    	SensorValue[clawEncoder] = 0;
+
+    	while(SensorValue[clawEncoder] < 30)
+			{
+				motor[claw] = 127;
+			}
+
+			motor[claw] = 0;
+    }
+
+    else if(vexRT[Btn7L] == 1)
+    {
+    	SensorValue[clawEncoder] = 0;
+
+    	while(SensorValue[clawEncoder] > -30)
+    	{
+    		motor[claw] = -127;
+    	}
+
+    	motor[claw] = 0;
+    }
+  }
+}
+
 task usercontrol()
 {
   // User control code here, inside the loop
@@ -87,16 +158,11 @@ task usercontrol()
 	//int servoInitial = motor[claw];
   bool stasisOn = false;
 
+	startTask(drive);
+	startTask(clawRun);
 
   while (true)
   {
-    //Right side of the robot is controlled by the right joystick, Y-axis
-    motor[frontRightMotor] = -vexRT[Ch2];
-    motor[backRightMotor]  = vexRT[Ch2];
-    //Left side of the robot is controlled by the left joystick, Y-axis
-    motor[frontLeftMotor] = -vexRT[Ch3];
-    motor[backLeftMotor]  = vexRT[Ch3];
-
     ///////////////////////
 
     if(vexRT[Btn5U] == 1)
@@ -136,32 +202,6 @@ task usercontrol()
     else
     {
     	motor[lift] = 0;
-    }
-
-    ///////////////////////
-
-    if(vexRT[Btn8R] == 1)
-    {
-    	SensorValue[clawEncoder] = 0;
-
-    	while(SensorValue[clawEncoder] < 130)
-			{
-				motor[claw] = 127;
-			}
-
-			motor[claw] = 0;
-    }
-
-    else if(vexRT[Btn8L] == 1)
-    {
-    	SensorValue[clawEncoder] = 0;
-
-    	while(SensorValue[clawEncoder] > -130)
-    	{
-    		motor[claw] = -127;
-    	}
-
-    	motor[claw] = 0;
     }
 
   }
