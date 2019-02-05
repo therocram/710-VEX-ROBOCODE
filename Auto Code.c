@@ -1,4 +1,5 @@
 #pragma config(Sensor, in1,    xAccel,         sensorAccelerometer)
+#pragma config(Sensor, in2,    yAccel,         sensorAccelerometer)
 #pragma config(Motor,  port1,           backLeftMotor, tmotorServoContinuousRotation, openLoop)
 #pragma config(Motor,  port2,           frontLeftMotor, tmotorServoContinuousRotation, openLoop)
 #pragma config(Motor,  port8,           frontRightMotor, tmotorServoContinuousRotation, openLoop, reversed)
@@ -10,26 +11,47 @@ task main()
 	// LHS Robotics Autonomous Code 2018-2019
 	wait1Msec(200);
 
-	int instX;
+	int instY;
 	int threshold = 3;
+	int threshold2 = 10;
 	int waitTime = 25;
-	int xBias = abs(SensorValue[xAccel]);
+	int yBias = abs(SensorValue[yAccel]);
 
 	do
 	{
-		instX = abs(SensorValue[xAccel]) - xBias;
+		instY = abs(SensorValue[yAccel]) - yBias;
 		wait1Msec(waitTime);
 	}
-	while(instX < threshold);
+	while(instY < threshold);
+
+  motor[frontRightMotor] = -127;
+  motor[backRightMotor]  = 127;
+  //Left side of the robot is controlled by the left joystick, Y-axis
+  motor[frontLeftMotor] = -127;
+ 	motor[backLeftMotor]  = 127;
+
+ 	yBias = abs(SensorValue[yAccel]);
+
+ 	do
+	{
+		instY = abs(SensorValue[yAccel]) - yBias;
+		wait1Msec(waitTime);
+	}
+	while(instY < threshold2);
+
+	motor[frontRightMotor] = 0;
+  motor[backRightMotor]  = 0;
+  //Left side of the robot is controlled by the left joystick, Y-axis
+  motor[frontLeftMotor] = 0;
+ 	motor[backLeftMotor]  = 0;
 
 	while(1 == 1)
   {
-    //Right side of the robot is controlled by the right joystick, Y-axis
     motor[frontRightMotor] = -vexRT[Ch2];
     motor[backRightMotor]  = vexRT[Ch2];
     //Left side of the robot is controlled by the left joystick, Y-axis
     motor[frontLeftMotor] = -vexRT[Ch3];
-    motor[backLeftMotor]  = vexRT[Ch3];
+   	motor[backLeftMotor]  = vexRT[Ch3];
   }
 
 

@@ -1,4 +1,5 @@
 #pragma config(Sensor, in1,    xAccel,         sensorAccelerometer)
+#pragma config(Sensor, in2,    yAccel,         sensorAccelerometer)
 #pragma config(Sensor, dgtl2,  clawEncoder,    sensorQuadEncoder)
 #pragma config(Motor,  port1,           backLeftMotor, tmotorVex393_HBridge, openLoop)
 #pragma config(Motor,  port2,           frontLeftMotor, tmotorVex393_MC29, openLoop)
@@ -62,12 +63,41 @@ void pre_auton()
 
 task autonomous()
 {
-  // ..........................................................................
-  // Insert user code here.
-  // ..........................................................................
+	wait1Msec(200);
 
-  // Remove this function call once you have "real" code.
-  AutonomousCodePlaceholderForTesting();
+	int instY;
+	int threshold = 3;
+	int threshold2 = 10;
+	int waitTime = 25;
+	int yBias = abs(SensorValue[yAccel]);
+
+	do
+	{
+		instY = abs(SensorValue[yAccel]) - yBias;
+		wait1Msec(waitTime);
+	}
+	while(instY < threshold);
+
+  motor[frontRightMotor] = -127;
+  motor[backRightMotor]  = 127;
+  //Left side of the robot is controlled by the left joystick, Y-axis
+  motor[frontLeftMotor] = -127;
+ 	motor[backLeftMotor]  = 127;
+
+ 	yBias = abs(SensorValue[yAccel]);
+
+ 	do
+	{
+		instY = abs(SensorValue[yAccel]) - yBias;
+		wait1Msec(waitTime);
+	}
+	while(instY < threshold2);
+
+	motor[frontRightMotor] = 0;
+  motor[backRightMotor]  = 0;
+  //Left side of the robot is controlled by the left joystick, Y-axis
+  motor[frontLeftMotor] = 0;
+ 	motor[backLeftMotor]  = 0;
 }
 
 /*---------------------------------------------------------------------------*/
