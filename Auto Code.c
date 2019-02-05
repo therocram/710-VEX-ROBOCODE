@@ -27,23 +27,55 @@ task main()
   motor[frontRightMotor] = -127;
   motor[backRightMotor]  = 127;
   //Left side of the robot is controlled by the left joystick, Y-axis
-  motor[frontLeftMotor] = -127;
- 	motor[backLeftMotor]  = 127;
+  motor[frontLeftMotor] = -100;
+ 	motor[backLeftMotor]  = 100;
+
+ 	clearTimer(T1);
 
  	yBias = abs(SensorValue[yAccel]);
+
+ 	wait(0.5);
 
  	do
 	{
 		instY = abs(SensorValue[yAccel]) - yBias;
 		wait1Msec(waitTime);
 	}
-	while(instY < threshold2);
+	while(instY < threshold);
 
 	motor[frontRightMotor] = 0;
   motor[backRightMotor]  = 0;
   //Left side of the robot is controlled by the left joystick, Y-axis
   motor[frontLeftMotor] = 0;
  	motor[backLeftMotor]  = 0;
+
+ 	int time = time1[T1] / 1000;
+
+ 	wait(0.5);
+
+ 	motor[frontRightMotor] = 127;
+  motor[backRightMotor]  = -127;
+  //Left side of the robot is controlled by the left joystick, Y-axis
+  motor[frontLeftMotor] = 100;
+ 	motor[backLeftMotor]  = -100;
+
+ 	wait(time);
+
+ 	motor[frontRightMotor] = 0;
+  motor[backRightMotor]  = 0;
+  //Left side of the robot is controlled by the left joystick, Y-axis
+  motor[frontLeftMotor] = 0;
+ 	motor[backLeftMotor]  = 0;
+
+ 	wait(0.5);
+
+  motor[frontRightMotor] = -127;
+  motor[backRightMotor]  = 127;
+  //Left side of the robot is controlled by the left joystick, Y-axis
+  motor[frontLeftMotor] = 100;
+ 	motor[backLeftMotor]  = -100;
+
+ 	wait(0.75);
 
 	while(1 == 1)
   {
