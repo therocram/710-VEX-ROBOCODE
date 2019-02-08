@@ -63,37 +63,71 @@ void pre_auton()
 
 task autonomous()
 {
+	// LHS Robotics Autonomous Code 2018-2019
 	wait1Msec(200);
-
+	//SensorValue[yAccel] = 0;
 	int instY;
 	int threshold = 3;
 	int threshold2 = 10;
 	int waitTime = 25;
 	int yBias = abs(SensorValue[yAccel]);
+	int leftSpeed = 65;
+	int rightSpeed = 127;
 
-	do
-	{
-		instY = abs(SensorValue[yAccel]) - yBias;
-		wait1Msec(waitTime);
-	}
-	while(instY < threshold);
-
-  motor[frontRightMotor] = -127;
-  motor[backRightMotor]  = 127;
+  motor[frontRightMotor] = -rightSpeed;
+  motor[backRightMotor]  = rightSpeed;
   //Left side of the robot is controlled by the left joystick, Y-axis
-  motor[frontLeftMotor] = -127;
- 	motor[backLeftMotor]  = 127;
+  motor[frontLeftMotor] = -leftSpeed;
+ 	motor[backLeftMotor]  = leftSpeed;
+
+ 	clearTimer(T1);
 
  	yBias = abs(SensorValue[yAccel]);
+
+ 	wait(1.5);
 
  	do
 	{
 		instY = abs(SensorValue[yAccel]) - yBias;
 		wait1Msec(waitTime);
 	}
-	while(instY < threshold2);
+	while(instY < threshold);
 
 	motor[frontRightMotor] = 0;
+  motor[backRightMotor]  = 0;
+  //Left side of the robot is controlled by the left joystick, Y-axis
+  motor[frontLeftMotor] = 0;
+ 	motor[backLeftMotor]  = 0;
+
+ 	int time = time1[T1];
+
+ 	wait(0.5);
+
+ 	motor[frontRightMotor] = rightSpeed;
+  motor[backRightMotor]  = -rightSpeed;
+  //Left side of the robot is controlled by the left joystick, Y-axis
+  motor[frontLeftMotor] = leftSpeed;
+ 	motor[backLeftMotor]  = -leftSpeed;
+
+ 	wait1Msec(time);
+
+ 	motor[frontRightMotor] = 0;
+  motor[backRightMotor]  = 0;
+  //Left side of the robot is controlled by the left joystick, Y-axis
+  motor[frontLeftMotor] = 0;
+ 	motor[backLeftMotor]  = 0;
+
+ 	wait(0.5);
+
+  motor[frontRightMotor] = rightSpeed;
+  motor[backRightMotor]  = -rightSpeed;
+  //Left side of the robot is controlled by the left joystick, Y-axis
+  motor[frontLeftMotor] = -leftSpeed;
+ 	motor[backLeftMotor]  = leftSpeed;
+
+ 	wait(0.75);
+
+ 	motor[frontRightMotor] = 0;
   motor[backRightMotor]  = 0;
   //Left side of the robot is controlled by the left joystick, Y-axis
   motor[frontLeftMotor] = 0;

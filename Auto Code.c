@@ -10,12 +10,14 @@ task main()
 {
 	// LHS Robotics Autonomous Code 2018-2019
 	wait1Msec(200);
-
+	//SensorValue[yAccel] = 0;
 	int instY;
 	int threshold = 3;
 	int threshold2 = 10;
 	int waitTime = 25;
 	int yBias = abs(SensorValue[yAccel]);
+	int leftSpeed = 65;
+	int rightSpeed = 127;
 
 	do
 	{
@@ -24,17 +26,17 @@ task main()
 	}
 	while(instY < threshold);
 
-  motor[frontRightMotor] = -127;
-  motor[backRightMotor]  = 127;
+  motor[frontRightMotor] = -rightSpeed;
+  motor[backRightMotor]  = rightSpeed;
   //Left side of the robot is controlled by the left joystick, Y-axis
-  motor[frontLeftMotor] = -100;
- 	motor[backLeftMotor]  = 100;
+  motor[frontLeftMotor] = -leftSpeed;
+ 	motor[backLeftMotor]  = leftSpeed;
 
  	clearTimer(T1);
 
  	yBias = abs(SensorValue[yAccel]);
 
- 	wait(0.5);
+ 	wait(1.5);
 
  	do
 	{
@@ -49,17 +51,17 @@ task main()
   motor[frontLeftMotor] = 0;
  	motor[backLeftMotor]  = 0;
 
- 	int time = time1[T1] / 1000;
+ 	int time = time1[T1];
 
  	wait(0.5);
 
- 	motor[frontRightMotor] = 127;
-  motor[backRightMotor]  = -127;
+ 	motor[frontRightMotor] = rightSpeed;
+  motor[backRightMotor]  = -rightSpeed;
   //Left side of the robot is controlled by the left joystick, Y-axis
-  motor[frontLeftMotor] = 100;
- 	motor[backLeftMotor]  = -100;
+  motor[frontLeftMotor] = leftSpeed;
+ 	motor[backLeftMotor]  = -leftSpeed;
 
- 	wait(time);
+ 	wait1Msec(time);
 
  	motor[frontRightMotor] = 0;
   motor[backRightMotor]  = 0;
@@ -69,11 +71,11 @@ task main()
 
  	wait(0.5);
 
-  motor[frontRightMotor] = -127;
-  motor[backRightMotor]  = 127;
+  motor[frontRightMotor] = rightSpeed;
+  motor[backRightMotor]  = -rightSpeed;
   //Left side of the robot is controlled by the left joystick, Y-axis
-  motor[frontLeftMotor] = 100;
- 	motor[backLeftMotor]  = -100;
+  motor[frontLeftMotor] = -leftSpeed;
+ 	motor[backLeftMotor]  = leftSpeed;
 
  	wait(0.75);
 
