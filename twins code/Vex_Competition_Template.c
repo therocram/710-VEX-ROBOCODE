@@ -101,13 +101,13 @@ task usercontrol()
 
 		if(vexRT[Btn5U]==1)
 		{
-			motor(FrontTop)=50;
+			motor(FrontTop)=45;
 		}
 		else
 		{
 			if(vexRT[Btn5D]==1)
 			{
-				motor(FrontTop)=-50;
+				motor(FrontTop)=-45;
 			}
 			else
 			{

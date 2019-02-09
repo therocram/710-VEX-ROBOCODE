@@ -101,7 +101,7 @@ void turnR(int rSpeed, int lSpeed)
  	motor[backLeftMotor]  = lSpeed;
 }
 
-task autonomous()
+void Skills()
 {
 	// LHS Robotics Autonomous Code 2018-2019
 	wait1Msec(200);
@@ -175,6 +175,159 @@ task autonomous()
 	motor[claw] = 0;
 }
 
+void Red()
+{
+	// LHS Robotics Autonomous Code 2018-2019
+	wait1Msec(200);
+	//SensorValue[yAccel] = 0;
+	int instY;
+	int threshold = 6;
+	int threshold2 = 10;
+	int waitTime = 25;
+	int yBias = abs(SensorValue[yAccel]);
+	int leftSpeed = 65;
+  int rightSpeed = 127;
+
+	driveForward(rightSpeed, leftSpeed);
+
+ 	clearTimer(T1);
+
+ 	yBias = abs(SensorValue[yAccel]);
+
+ 	wait(1);
+
+ 	do
+	{
+		instY = abs(SensorValue[yAccel]) - yBias;
+		wait1Msec(waitTime);
+		//yBias = abs(SensorValue[yAccel]);
+	}
+	while(instY < threshold);
+
+  driveStop();
+
+ 	int time = time1[T1];
+
+ 	wait(0.5);
+
+	driveBackward(rightSpeed, leftSpeed);
+
+ 	wait1Msec(time);
+
+ 	driveStop();
+
+ 	wait(0.5);
+
+  turnR(rightSpeed, leftSpeed);
+
+ 	wait(0.5);
+
+ 	driveStop();
+
+ 	SensorValue[clawEncoder] = 0;
+
+ 	while(SensorValue[clawEncoder] < 130)
+	{
+		motor[claw] = 127;
+	}
+
+	motor[claw] = 0;
+
+ 	driveForward(rightSpeed, leftSpeed);
+
+ 	wait(1.75);
+
+ 	driveStop();
+
+ 	SensorValue[clawEncoder] = 0;
+
+ 	while(SensorValue[clawEncoder] > -30)
+	{
+		motor[claw] = -127;
+	}
+
+	motor[claw] = 0;
+}
+
+void Blue()
+{
+		// LHS Robotics Autonomous Code 2018-2019
+	wait1Msec(200);
+	//SensorValue[yAccel] = 0;
+	int instY;
+	int threshold = 6;
+	int threshold2 = 10;
+	int waitTime = 25;
+	int yBias = abs(SensorValue[yAccel]);
+	int leftSpeed = 65;
+  int rightSpeed = 127;
+
+	driveForward(rightSpeed, leftSpeed);
+
+ 	clearTimer(T1);
+
+ 	yBias = abs(SensorValue[yAccel]);
+
+ 	wait(1);
+
+ 	do
+	{
+		instY = abs(SensorValue[yAccel]) - yBias;
+		wait1Msec(waitTime);
+		//yBias = abs(SensorValue[yAccel]);
+	}
+	while(instY < threshold);
+
+  driveStop();
+
+ 	int time = time1[T1];
+
+ 	wait(0.5);
+
+	driveBackward(rightSpeed, leftSpeed);
+
+ 	wait1Msec(time);
+
+ 	driveStop();
+
+ 	wait(0.5);
+
+  turnL(rightSpeed, leftSpeed);
+
+ 	wait(0.5);
+
+ 	driveStop();
+
+ 	SensorValue[clawEncoder] = 0;
+
+ 	while(SensorValue[clawEncoder] < 130)
+	{
+		motor[claw] = 127;
+	}
+
+	motor[claw] = 0;
+
+ 	driveForward(rightSpeed, leftSpeed);
+
+ 	wait(1.75);
+
+ 	driveStop();
+
+ 	SensorValue[clawEncoder] = 0;
+
+ 	while(SensorValue[clawEncoder] > -30)
+	{
+		motor[claw] = -127;
+	}
+
+	motor[claw] = 0;
+}
+
+task autonomous()
+{
+	Skills();
+}
+
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
 /*                              User Control Task                            */
@@ -208,10 +361,14 @@ task clawRun()
     {
     	SensorValue[clawEncoder] = 0;
 
-    	while(SensorValue[clawEncoder] < 130)
+    	/*while(SensorValue[clawEncoder] < 130)
 			{
 				motor[claw] = 127;
-			}
+			}*/
+
+			motor[claw] = 127;
+
+			wait(0.5);
 
 			motor[claw] = 0;
     }
@@ -220,12 +377,16 @@ task clawRun()
     {
     	SensorValue[clawEncoder] = 0;
 
-    	while(SensorValue[clawEncoder] > -130)
+    	/*while(SensorValue[clawEncoder] > -130)
     	{
     		motor[claw] = -127;
-    	}
+    	}*/
 
-    	motor[claw] = 0;
+			motor[claw] = -127;
+
+			wait(0.5);
+
+			motor[claw] = 0;
     }
 
     ///////////////////////b
@@ -234,22 +395,31 @@ task clawRun()
     {
     	SensorValue[clawEncoder] = 0;
 
-    	while(SensorValue[clawEncoder] < 30)
+    	/*while(SensorValue[clawEncoder] < 30)
 			{
 				motor[claw] = 127;
-			}
+			}*/
+
+			motor[claw] = 127;
+
+			wait(0.20);
 
 			motor[claw] = 0;
+
     }
 
     else if(vexRT[Btn7L] == 1)
     {
     	SensorValue[clawEncoder] = 0;
 
-    	while(SensorValue[clawEncoder] > -30)
+    	/*while(SensorValue[clawEncoder] > -30)
     	{
     		motor[claw] = -127;
-    	}
+    	}*/
+
+    	motor[claw] = 127;
+
+			wait(0.20);
 
     	motor[claw] = 0;
     }
