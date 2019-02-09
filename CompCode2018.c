@@ -61,77 +61,118 @@ void pre_auton()
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
+void driveForward(int rSpeed, int lSpeed)
+{
+  motor[frontRightMotor] = -rSpeed;
+  motor[backRightMotor]  = rSpeed;
+  motor[frontLeftMotor] = -lSpeed;
+ 	motor[backLeftMotor]  = lSpeed;
+}
+
+void driveBackward(int rSpeed, int lSpeed)
+{
+	motor[frontRightMotor] = rSpeed;
+  motor[backRightMotor]  = -rSpeed;
+  motor[frontLeftMotor] = lSpeed;
+ 	motor[backLeftMotor]  = -lSpeed;
+}
+
+void driveStop()
+{
+	motor[frontRightMotor] = 0;
+  motor[backRightMotor]  = 0;
+  motor[frontLeftMotor] = 0;
+ 	motor[backLeftMotor]  = 0;
+}
+
+void turnL(int rSpeed, int lSpeed)
+{
+	motor[frontRightMotor] = -rSpeed;
+  motor[backRightMotor]  = rSpeed;
+  motor[frontLeftMotor] = lSpeed;
+ 	motor[backLeftMotor]  = -lSpeed;
+}
+
+void turnR(int rSpeed, int lSpeed)
+{
+	motor[frontRightMotor] = rSpeed;
+  motor[backRightMotor]  = -rSpeed;
+  motor[frontLeftMotor] = -lSpeed;
+ 	motor[backLeftMotor]  = lSpeed;
+}
+
 task autonomous()
 {
 	// LHS Robotics Autonomous Code 2018-2019
 	wait1Msec(200);
 	//SensorValue[yAccel] = 0;
 	int instY;
-	int threshold = 3;
+	int threshold = 6;
 	int threshold2 = 10;
 	int waitTime = 25;
 	int yBias = abs(SensorValue[yAccel]);
 	int leftSpeed = 65;
-	int rightSpeed = 127;
+  int rightSpeed = 127;
 
-  motor[frontRightMotor] = -rightSpeed;
-  motor[backRightMotor]  = rightSpeed;
-  //Left side of the robot is controlled by the left joystick, Y-axis
-  motor[frontLeftMotor] = -leftSpeed;
- 	motor[backLeftMotor]  = leftSpeed;
+	driveForward(rightSpeed, leftSpeed);
 
  	clearTimer(T1);
 
  	yBias = abs(SensorValue[yAccel]);
 
- 	wait(1.5);
+ 	wait(1);
 
  	do
 	{
 		instY = abs(SensorValue[yAccel]) - yBias;
 		wait1Msec(waitTime);
+		//yBias = abs(SensorValue[yAccel]);
 	}
 	while(instY < threshold);
 
-	motor[frontRightMotor] = 0;
-  motor[backRightMotor]  = 0;
-  //Left side of the robot is controlled by the left joystick, Y-axis
-  motor[frontLeftMotor] = 0;
- 	motor[backLeftMotor]  = 0;
+  driveStop();
 
  	int time = time1[T1];
 
  	wait(0.5);
 
- 	motor[frontRightMotor] = rightSpeed;
-  motor[backRightMotor]  = -rightSpeed;
-  //Left side of the robot is controlled by the left joystick, Y-axis
-  motor[frontLeftMotor] = leftSpeed;
- 	motor[backLeftMotor]  = -leftSpeed;
+	driveBackward(rightSpeed, leftSpeed);
 
  	wait1Msec(time);
 
- 	motor[frontRightMotor] = 0;
-  motor[backRightMotor]  = 0;
-  //Left side of the robot is controlled by the left joystick, Y-axis
-  motor[frontLeftMotor] = 0;
- 	motor[backLeftMotor]  = 0;
+ 	driveStop();
 
  	wait(0.5);
 
-  motor[frontRightMotor] = rightSpeed;
-  motor[backRightMotor]  = -rightSpeed;
-  //Left side of the robot is controlled by the left joystick, Y-axis
-  motor[frontLeftMotor] = -leftSpeed;
- 	motor[backLeftMotor]  = leftSpeed;
+  turnR(rightSpeed, leftSpeed);
 
- 	wait(0.75);
+ 	wait(0.65);
 
- 	motor[frontRightMotor] = 0;
-  motor[backRightMotor]  = 0;
-  //Left side of the robot is controlled by the left joystick, Y-axis
-  motor[frontLeftMotor] = 0;
- 	motor[backLeftMotor]  = 0;
+ 	driveStop();
+
+ 	SensorValue[clawEncoder] = 0;
+
+ 	while(SensorValue[clawEncoder] < 130)
+	{
+		motor[claw] = 127;
+	}
+
+	motor[claw] = 0;
+
+ 	driveForward(rightSpeed, leftSpeed);
+
+ 	wait(1.75);
+
+ 	driveStop();
+
+ 	SensorValue[clawEncoder] = 0;
+
+ 	while(SensorValue[clawEncoder] > -30)
+	{
+		motor[claw] = -127;
+	}
+
+	motor[claw] = 0;
 }
 
 /*---------------------------------------------------------------------------*/
