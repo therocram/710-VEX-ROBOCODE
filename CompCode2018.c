@@ -152,10 +152,14 @@ void Skills()
 
  	SensorValue[clawEncoder] = 0;
 
- 	while(SensorValue[clawEncoder] < 130)
+ 	/*while(SensorValue[clawEncoder] < 130)
 	{
 		motor[claw] = 127;
-	}
+	}*/
+
+	motor[claw] = 127;
+
+	wait(0.5);
 
 	motor[claw] = 0;
 
@@ -167,10 +171,14 @@ void Skills()
 
  	SensorValue[clawEncoder] = 0;
 
- 	while(SensorValue[clawEncoder] > -30)
+ 	/*while(SensorValue[clawEncoder] > -30)
 	{
 		motor[claw] = -127;
-	}
+	}*/
+
+	motor[claw] = 127;
+
+	wait(0.20);
 
 	motor[claw] = 0;
 }
@@ -417,7 +425,7 @@ task clawRun()
     		motor[claw] = -127;
     	}*/
 
-    	motor[claw] = 127;
+    	motor[claw] = -127;
 
 			wait(0.20);
 
